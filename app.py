@@ -44,3 +44,7 @@ print("\nBest Matching Images:\n")
 
 for item in scores[:5]:
     print(item[0], "Score:", item[1])
+
+
+for i in range(5):
+    print("HI")
