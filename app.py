@@ -10,7 +10,7 @@ device = "cuda" if torch.cuda.is_available() else "cpu"
 model, preprocess = clip.load("ViT-B/32", device=device)
 
 # Ask user for a text prompt (mood)
-mood = input("Enter your mood: ")
+mood = input("Enter your mood:")
 
 # Folder containing images
 image_folder = "images"
