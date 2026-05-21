@@ -3,9 +3,12 @@ import clip
 import torch
 from PIL import Image
 import os
+
 device = "cuda" if torch.cuda.is_available() else "cpu"
 
 model, preprocess = clip.load("ViT-B/32", device=device)
+
+image_folder = r"C:\Users\pavan kumar\OneDrive\Pictures"
 
 # Page settings
 st.set_page_config(page_title="MoodSnap AI", layout="centered")
@@ -25,15 +28,14 @@ mood = st.text_input(
 # Function to find best matching image
 def get_best_image(mood):
     
-    image_folder = "images"
     scores = []
-
+    text = clip.tokenize([mood]).to(device)
     for file in os.listdir(image_folder):
         path = os.path.join(image_folder, file)
 
         try:
             image = preprocess(Image.open(path)).unsqueeze(0).to(device)
-            text = clip.tokenize([mood]).to(device)
+            
 
             with torch.no_grad():
                 image_features = model.encode_image(image)
@@ -64,7 +66,7 @@ if st.button("✨ Suggest Photo", use_container_width=True):
             if len(scores) > 0:
 
                 best_image = scores[0][0]
-                best_path = os.path.join("images", best_image)
+                best_path = os.path.join(image_folder, best_image)
 
                 st.success("AI found your best matching vibe.")
 
@@ -82,7 +84,7 @@ if st.button("✨ Suggest Photo", use_container_width=True):
                 cols=st.columns(5)
                 
                 for i, item in enumerate(scores[0:5]):
-                    img_path=os.path.join("images",item[0])
+                    img_path=os.path.join(image_folder,item[0])
                     
                     with cols[i]:
                         st.image(img_path,caption=f"{i+1}", use_container_width=True)

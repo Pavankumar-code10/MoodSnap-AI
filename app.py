@@ -13,7 +13,7 @@ model, preprocess = clip.load("ViT-B/32", device=device)
 mood = input("Enter your mood:")
 
 # Folder containing images
-image_folder = "images"
+image_folder = "OneDrive - Personal"
 
 # Store (filename, similarity score) pairs
 scores = []
